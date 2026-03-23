@@ -1,10 +1,9 @@
 package com.saram.testboard.user;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,5 +14,15 @@ public class UserController {
     @PostMapping
     public UserResponse create(@RequestBody UserRequest request) {
         return userService.create(request);
+    }
+
+    @GetMapping
+    public List<UserResponse> getUsers() {
+        return userService.getUsers();
+    }
+
+    @GetMapping("/{id}")
+    public UserResponse getUsers(@PathVariable Long id) {
+        return userService.getUsers(id);
     }
 }
