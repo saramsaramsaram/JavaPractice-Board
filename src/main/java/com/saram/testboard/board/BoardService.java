@@ -5,6 +5,8 @@ import com.saram.testboard.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -22,5 +24,28 @@ public class BoardService {
 
         return BoardResponse.builder().id(saved.getId()).title(saved.getTitle()).content(saved.getContent()).userName(saved.getUser().getName()).build();
 
+    }
+
+    public List<BoardResponse> getPosts() {
+        return boardRepository.findAll().stream()
+                .map(post -> BoardResponse.builder()
+                        .id(post.getId())
+                        .title(post.getTitle())
+                        .content(post.getContent())
+                        .userName(post.getUser().getName())
+                        .build())
+                .toList();
+    }
+
+    public BoardResponse getPost(Long id) {
+        Board post = boardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("게시글 없음"));
+
+        return BoardResponse.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .userName(post.getUser().getName())
+                .build();
     }
 }

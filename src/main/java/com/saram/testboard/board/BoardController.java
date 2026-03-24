@@ -1,10 +1,9 @@
 package com.saram.testboard.board;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,5 +14,15 @@ public class BoardController {
     @PostMapping
     public BoardResponse create(@RequestBody BoardRequest request) {
         return boardService.create(request);
+    }
+
+    @GetMapping
+    public List<BoardResponse> getPosts() {
+        return boardService.getPosts();
+    }
+
+    @GetMapping("/{id}")
+    public BoardResponse getPost(@PathVariable Long id) {
+        return boardService.getPost(id);
     }
 }
